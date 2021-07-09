@@ -73,12 +73,8 @@
   color: rgb(8, 6, 6);
 }
 
-.Dynamic-Sections {
-  display: flex;
-  flex-direction: row;
-  align-items: right;
+.dynamic-sections {
   margin-bottom: 50px;
-  justify-content: space-evenly;
 }
 
 .same-row {
@@ -86,9 +82,9 @@
   flex-direction: row;
 }
 
-.text-box {
-  width: 245px;
-  /* height: 40px; */
+.country-search {
+  width: 352px;
+  font-size: 20px;
 }
 
 .App-link {
@@ -105,7 +101,7 @@
   }
 }
 
-.delete {
+.remove-country {
   background-color: rgba(255, 0, 0, 0.418);
   width: 20px;
   height: 20px;
@@ -116,6 +112,6 @@
   cursor: pointer;
 }
 
-.Dynamic-Sections:hover .delete {
+.dynamic-sections:hover .remove-country {
   opacity: 1;
 }

@@ -38,7 +38,7 @@ function App() {
               Welcome to my first app in React.
             </p>
             <div className="same-row">
-              <input className="text-box"
+              <input className="country-search"
                 type="search"
                 name="dest"
                 placeholder="Enter Next Bucket-List Destination"
@@ -93,25 +93,48 @@ function App() {
       <div className="background-second"> {/*className needs to have a captial N!!*/}
         <div className="App-content2">
           <p>{YouAR} {country}</p>
-          {countryList.map(x => <div className="Dynamic-Sections">
-            <div>{x}</div>
-            <div
-              className="delete"
-              type="button"
-              onClick={() => handleCountryDelete(x)}
-            >
-              X
+          <div className="container">
+            {countryList.map(countryName => <div className="row dynamic-sections align-items-center justify-content-center">
+              <div className="col-sm-2">
+                <div className="same-row">
+                  <div
+                    className="remove-country"
+                    type="button"
+                    onClick={() => handleCountryDelete(countryName)}
+                  >
+                    X
+                  </div>
+                  <div>
+                    {countryName}
+                  </div>
+                </div>
+              </div>
+              <div className="col-sm">
+                <textarea
+                  name="textarea"
+                  placeholder="Notes"
+                  rows="3"
+                  spellCheck="true"
+                >
+                </textarea>
+              </div>
+              <div className="col-sm">
+                <input
+                  type="text"
+                  placeholder="Useful link"
+                />
+                <input
+                  type="text"
+                  placeholder="Useful link"
+                />
+                <input
+                  type="text"
+                  placeholder="Useful link"
+                />
+              </div>
             </div>
-            <input className="text-box"
-              type="text"
-              placeholder="Notes"
-            />
-            <input className="text-box"
-              type="text"
-              placeholder="Useful links"
-            />
+            )}
           </div>
-          )}
         </div>
       </div>
     </div>
