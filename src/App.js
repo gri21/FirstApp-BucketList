@@ -1,24 +1,39 @@
-import logo from './Sun2.png';
+import logo from './SunImage.png';
 import './App.css';
 import React, { useState } from 'react';
 import { validCountries } from './validCountries';
+import CountryInserts from './components/CountryInserts';
+import { writeAll, readAll} from './localStorage';
 
 function App() {
-  const [country, setCountry] = useState('');
+  const [countryModified, setCountryModified] = useState('');
   const [countryTemp, setCountryTemp] = useState('');
-  const [countryList, setCountryList] = useState(["Sri Lanka", "UK", "France"]); //populated for testing purposes. Should be []
+  const [countryList, setCountryList] = useState(readAll()); //CRUD: Read
   const [YouAR, setar] = useState('');
   const handleCountryDelete = countryToRemove => {
     let countryListRemoved = [];
     for (let i = 0; i < countryList.length; i++) {
-      if (countryList[i] !== countryToRemove) {
+      if (countryList[i].name !== countryToRemove) {
         countryListRemoved.push(countryList[i]);
-        // debugger;
       };
     };
-    setCountryList(countryListRemoved);
-    setCountry(countryToRemove);
+    setCountryList(countryListRemoved); //CRUD: Delete
+    writeAll(countryListRemoved);
+    setCountryModified(countryToRemove);
     setar('You removed');
+  };
+  const handleCountrySave = (countryToSave, countryNotes, countryLink1, countryLink2, countryLink3) => {
+    for (let i = 0; i < countryList.length; i++) {
+      if (countryList[i].name === countryToSave) {
+        countryList[i].notes = countryNotes;
+        countryList[i].link1 = countryLink1;
+        countryList[i].link2 = countryLink2;
+        countryList[i].link3 = countryLink3; // CRUD: Update
+      };
+    };
+    writeAll(countryList);
+    setCountryModified(countryToSave);
+    setar('You saved');
   };
   return (
     <div className="App">
@@ -43,6 +58,7 @@ function App() {
                 name="dest"
                 placeholder="Enter Next Bucket-List Destination"
                 list="validCountries"
+                value={countryTemp}
                 onChange={event => setCountryTemp(event.target.value)}
               />
               <datalist id="validCountries">
@@ -51,8 +67,10 @@ function App() {
               <button onClick={() => {
                 if (validCountries.includes(countryTemp)) {
                   setar('You added');
-                  setCountry(countryTemp);
-                  setCountryList([...new Set([...countryList, countryTemp])]);
+                  setCountryModified(countryTemp);
+                  const updatedCountryList = [...new Set([...countryList, { name: countryTemp }])];
+                  setCountryList(updatedCountryList); //CRUD: Create
+                  writeAll(updatedCountryList); //Have to do this because setCountryList won't update countryList until next render
                 };
               }
               }>
@@ -60,7 +78,7 @@ function App() {
               </button>
             </div>
             <p>
-              No Inspiration? Have a look at the links below:
+              Looking for Inspiration? Check out the links below:
             </p>
             <a
               className="App-link"
@@ -86,54 +104,22 @@ function App() {
             >
               G Adventures
             </a>
-            <p>{YouAR} {country}</p>
+            <p>
+              Remember to save your modifications!
+            </p>
+            <p>{YouAR} {countryModified}</p>
           </div>
         </div>
       </div>
       <div className="background-second"> {/*className needs to have a captial N!!*/}
         <div className="App-content2">
-          <p>{YouAR} {country}</p>
-          <div className="container">
-            {countryList.map(countryName => <div className="row dynamic-sections align-items-center justify-content-center">
-              <div className="col-sm-2">
-                <div className="same-row">
-                  <div
-                    className="remove-country"
-                    type="button"
-                    onClick={() => handleCountryDelete(countryName)}
-                  >
-                    X
-                  </div>
-                  <div>
-                    {countryName}
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm">
-                <textarea
-                  name="textarea"
-                  placeholder="Notes"
-                  rows="3"
-                  spellCheck="true"
-                >
-                </textarea>
-              </div>
-              <div className="col-sm">
-                <input
-                  type="text"
-                  placeholder="Useful link"
-                />
-                <input
-                  type="text"
-                  placeholder="Useful link"
-                />
-                <input
-                  type="text"
-                  placeholder="Useful link"
-                />
-              </div>
-            </div>
-            )}
+          <p>{YouAR} {countryModified}</p>
+          <div className="container-fluid">
+            {countryList.map(country => <CountryInserts
+              key={country.name} //To highlight to React what's changed if anything for the DOM
+              country={country}
+              handleCountryDelete={handleCountryDelete}
+              handleCountrySave={handleCountrySave} />)}
           </div>
         </div>
       </div>

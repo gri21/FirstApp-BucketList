@@ -46,9 +46,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 100px;
   justify-content: space-evenly;
-  padding-right: 40px;
+  padding-right: 50px;
   color: rgb(36, 26, 26);
   font-size: calc(10px + 2vmin);
 }
@@ -56,7 +55,7 @@
 .background-second {
   background-image: url("./background4.jpg");
   background-repeat: no-repeat;
-  background-size:cover;
+  background-size: cover;
   background-blend-mode: color;
 }
 
@@ -65,9 +64,7 @@
   min-height: 140vh;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  justify-content: top;
-  font-size: calc(15px + 2vmin);
+  font-size: 25px;
   font-family: Arial, sans-serif;
   font-weight: bold;
   color: rgb(8, 6, 6);
@@ -102,16 +99,21 @@
 }
 
 .remove-country {
-  background-color: rgba(255, 0, 0, 0.418);
-  width: 20px;
-  height: 20px;
-  color: white;
   transition: all 0.3s linear;
   font-size: 15px;
   opacity: 0;
-  cursor: pointer;
+}
+
+.save-country {
+  transition: all 0.3s linear;
+  font-size: 15px;
+  opacity: 0;
 }
 
 .dynamic-sections:hover .remove-country {
+  opacity: 1;
+}
+
+.dynamic-sections:hover .save-country {
   opacity: 1;
 }
