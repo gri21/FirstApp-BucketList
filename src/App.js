@@ -3,13 +3,15 @@ import './App.css';
 import React, { useState } from 'react';
 import { validCountries } from './validCountries';
 import CountryInserts from './components/CountryInserts';
-import { writeAll, readAll} from './localStorage';
+import Inspiration from './components/Inspiration';
+import { writeAll, readAll } from './localStorage';
+import CountrySearch from './components/CountrySearch';
 
 function App() {
   const [countryModified, setCountryModified] = useState('');
-  const [countryTemp, setCountryTemp] = useState('');
   const [countryList, setCountryList] = useState(readAll()); //CRUD: Read
   const [YouAR, setar] = useState('');
+
   const handleCountryDelete = countryToRemove => {
     let countryListRemoved = [];
     for (let i = 0; i < countryList.length; i++) {
@@ -22,6 +24,7 @@ function App() {
     setCountryModified(countryToRemove);
     setar('You removed');
   };
+
   const handleCountrySave = (countryToSave, countryNotes, countryLink1, countryLink2, countryLink3) => {
     for (let i = 0; i < countryList.length; i++) {
       if (countryList[i].name === countryToSave) {
@@ -35,6 +38,17 @@ function App() {
     setCountryModified(countryToSave);
     setar('You saved');
   };
+
+  const addCountry = (countryTemp) => {
+    if (validCountries.includes(countryTemp)) {
+      setar('You added');
+      setCountryModified(countryTemp);
+      const updatedCountryList = [...new Set([...countryList, { name: countryTemp }])];
+      setCountryList(updatedCountryList); //CRUD: Create
+      writeAll(updatedCountryList); //Have to do this because setCountryList won't update countryList until next render
+    };
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -52,58 +66,8 @@ function App() {
             <p>
               Welcome to my first app in React.
             </p>
-            <div className="same-row">
-              <input className="country-search"
-                type="search"
-                name="dest"
-                placeholder="Enter Next Bucket-List Destination"
-                list="validCountries"
-                value={countryTemp}
-                onChange={event => setCountryTemp(event.target.value)}
-              />
-              <datalist id="validCountries">
-                {validCountries.map(x => <option value={x} />)}
-              </datalist>
-              <button onClick={() => {
-                if (validCountries.includes(countryTemp)) {
-                  setar('You added');
-                  setCountryModified(countryTemp);
-                  const updatedCountryList = [...new Set([...countryList, { name: countryTemp }])];
-                  setCountryList(updatedCountryList); //CRUD: Create
-                  writeAll(updatedCountryList); //Have to do this because setCountryList won't update countryList until next render
-                };
-              }
-              }>
-                Add Country
-              </button>
-            </div>
-            <p>
-              Looking for Inspiration? Check out the links below:
-            </p>
-            <a
-              className="App-link"
-              href="https://www.tripadvisor.co.uk/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Trip Advisor
-            </a>
-            <a
-              className="App-link"
-              href="https://www.lonelyplanet.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Lonely Planet
-            </a>
-            <a
-              className="App-link"
-              href="https://www.gadventures.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              G Adventures
-            </a>
+            <CountrySearch addCountry={addCountry} />
+            <Inspiration />
             <p>
               Remember to save your modifications!
             </p>

@@ -46,14 +46,14 @@ const CountryInserts = ({ country, handleCountryDelete, handleCountrySave }) => 
           type="text"
           name="Useful link 2"
           placeholder="Useful link"
-          value = {countryLink2}
+          value={countryLink2}
           onChange={event => setLink2(event.target.value)}
         />
         <input
           type="text"
           name="Useful link 3"
           placeholder="Useful link"
-          value = {countryLink3}
+          value={countryLink3}
           onChange={event => setLink3(event.target.value)}
         />
       </div>
@@ -61,7 +61,7 @@ const CountryInserts = ({ country, handleCountryDelete, handleCountrySave }) => 
         <div
           className="btn btn-info save-country"
           type="button"
-          onClick={() => handleCountrySave(country.name,countryNotes,countryLink1,countryLink2,countryLink3)}
+          onClick={() => handleCountrySave(country.name, countryNotes, countryLink1, countryLink2, countryLink3)}
         >
           Save
         </div>
