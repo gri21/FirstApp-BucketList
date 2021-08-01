@@ -6,6 +6,8 @@ export const writeAll = (value) => {
 
 export const readAll = () => {
     const output = localStorage.getItem(KEY);
+    if (!output) { //any falsey value, better than doing === undefined 
+        return [];
+    }
     return JSON.parse(output);
-
 };

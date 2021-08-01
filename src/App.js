@@ -12,7 +12,7 @@ function App() {
   const [countryList, setCountryList] = useState(readAll()); //CRUD: Read
   const [YouAR, setar] = useState('');
 
-  const handleCountryDelete = countryToRemove => {
+  const handleCountryDelete = (countryToRemove) => {
     let countryListRemoved = [];
     for (let i = 0; i < countryList.length; i++) {
       if (countryList[i].name !== countryToRemove) {
@@ -43,7 +43,7 @@ function App() {
     if (validCountries.includes(countryTemp)) {
       setar('You added');
       setCountryModified(countryTemp);
-      const updatedCountryList = [...new Set([...countryList, { name: countryTemp }])];
+      const updatedCountryList = [...countryList, { name: countryTemp }]; //Spread the array
       setCountryList(updatedCountryList); //CRUD: Create
       writeAll(updatedCountryList); //Have to do this because setCountryList won't update countryList until next render
     };

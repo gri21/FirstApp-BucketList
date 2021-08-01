@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
 import { validCountries } from '../validCountries';
-// import { writeAll, readAll } from '../localStorage';
-
-// const myCountryList = 4;
-// const myCountryList = myCountryList * 2;
 
 const CountrySearch = ({ addCountry }) => {
     const [countryTemp, setCountryTemp] = useState('');
@@ -14,14 +10,16 @@ const CountrySearch = ({ addCountry }) => {
                     type="search"
                     name="dest"
                     placeholder="Enter Next Bucket-List Destination"
-                    list="validCountries"
+                    list="validCountriesDataList"
                     value={countryTemp}
                     onChange={event => setCountryTemp(event.target.value)}
                 />
-                <datalist id="validCountries">
+                <datalist id="validCountriesDataList">
                     {validCountries.map(x => <option value={x} />)}
                 </datalist>
-                <button onClick={() => {
+                <button 
+                //name = 'AddCountryButton'
+                onClick={() => {
                     addCountry(countryTemp)
                 }
                 }>
